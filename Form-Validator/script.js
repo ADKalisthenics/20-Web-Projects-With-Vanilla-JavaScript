@@ -25,36 +25,29 @@ function isValidEmail(email) {
         return regex.test(String(email).toLowerCase());
 }
 
+//Check required fields
+function checkRequired(inputArr) {
+    inputArr.forEach(function(input) {
+        //console.log(input.value);
+        //console.log(input.id);
+        if(input.value.trim() === '') {
+            //showError(input, `${input.id} is required`);
+            showError(input, `${getFieldName(input)} is required`);
+        } else {
+            showSuccess(input);
+        }
+    });
+}
+
+//Get field name
+function getFieldName(input) {
+    //return input.id.toUpperCase();
+    return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
 //Event listeners
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    //console.log(username.value);
-
-    if(username.value === '') {
-        //alert('Username is requred');
-        showError(username, 'Username is required');
-    } else {
-        showSuccess(username);
-    }
-
-    if(email.value === '') {
-        showError(email, 'Eail is required');
-    } else if(!isValidEmail(email.value)) {
-        showError(email, 'Eail is not valid');
-    } else {
-        showSuccess(email);
-    }
-
-    if(password.value === '') {
-        showError(password, 'Password is required');
-    } else {
-        showSuccess(password);
-    }
-
-    if(password2.value === '') {
-        showError(password2, 'Password2 is required');
-    } else {
-        showSuccess(password2);
-    }
+    checkRequired([username, email, password, password2]);
 });
